@@ -1,0 +1,9 @@
+logging:
+  level:
+    root: info
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/nutron?currentSchema=nutron
+    username: nutron
+    password: nutron
