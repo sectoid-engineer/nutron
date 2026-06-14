@@ -5,16 +5,16 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
-public record Day(
-    @Nonnull UUID id,
-    String name,
-    String note,
-    DayType type,
-    LocalDateTime date,
-    Macros targets,
-    Set<Meal> meals,
-    Macros totals
-) {
+public class Day extends Tracked {
+    private DayType type;
+    private LocalDateTime date;
+    private Macros targets;
+    private Set<Meal> meals;
+
+  public Day(@Nonnull UUID id) {
+    super(id);
+  }
+
   public enum DayType {
     HARD_TRAIN, LIGHT_TRAIN, REST, SEDENTARY
   }

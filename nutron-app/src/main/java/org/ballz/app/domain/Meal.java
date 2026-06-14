@@ -1,15 +1,14 @@
 package org.ballz.app.domain;
 
-import jakarta.annotation.Nonnull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record Meal(
-    @Nonnull UUID id,
-    String name,
-    LocalDateTime dateTime,
-    String note,
-    Recipe recipe,
-    Macros targets
-) {
+public class Meal extends Tracked {
+    LocalDateTime dateTime;
+    Recipe recipe;
+    Macros targets;
+
+    public Meal(UUID id) {
+      super(id);
+    }
 }
