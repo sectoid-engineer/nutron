@@ -2,7 +2,6 @@ package org.ballz.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import jakarta.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;

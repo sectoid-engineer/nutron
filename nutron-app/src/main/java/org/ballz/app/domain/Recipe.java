@@ -1,6 +1,5 @@
 package org.ballz.app.domain;
 
-import jakarta.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
