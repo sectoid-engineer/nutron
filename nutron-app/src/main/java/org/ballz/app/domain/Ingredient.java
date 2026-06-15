@@ -15,10 +15,9 @@ import java.util.UUID;
 public class Ingredient extends Tracked {
   private IngredientType type;
   private CookingState cookingState;
-  private final Map<String, Integer> micronutrients = new HashMap<>();
-  private final Map<String, Integer> otherValues = new HashMap<>();
-  private int cost;
-  private Currency currency;
+  private final Map<String, Quantity> micronutrients = new HashMap<>();
+  private final Map<String, Quantity> otherValues = new HashMap<>();
+  private Cost cost;
 
   public Ingredient(UUID id) {
     super(id);

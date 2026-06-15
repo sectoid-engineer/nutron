@@ -10,6 +10,7 @@ public class Day extends Tracked {
     private LocalDateTime date;
     private Macros targets;
     private Set<Meal> meals;
+    private Cost cost;
 
   public Day(@Nonnull UUID id) {
     super(id);

@@ -10,11 +10,10 @@ import java.util.UUID;
  * Combination of Ingredients ready to be eaten.
  */
 public class Recipe extends Tracked {
-  private final Map<Ingredient, Integer> ingredientsQuantities = new HashMap<>();
-  private final Map<String, Integer> subtotalMicronutrients = new HashMap<>();
-  private final Map<String, Integer> subtotalOtherValues = new HashMap<>();
-  private int subtotalCost;
-  private Currency currency;
+  private final Map<Ingredient, Quantity> ingredientsQuantities = new HashMap<>();
+  private final Map<String, Quantity> subtotalMicronutrients = new HashMap<>();
+  private final Map<String, Quantity> subtotalOtherValues = new HashMap<>();
+  private Cost subtotalCost;
   private final Set<Tag> tags = new HashSet<>();
 
   public Recipe(UUID id) {
