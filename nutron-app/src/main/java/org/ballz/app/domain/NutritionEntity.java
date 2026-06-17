@@ -6,9 +6,9 @@ import jakarta.annotation.Nonnull;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-public abstract class Tracked {
+public abstract class NutritionEntity {
   private final @Nonnull UUID id;
-  private String name;
-  private String note;
-  private Macros trackedMacros;
+  protected String name;
+  protected String note;
+  protected @Nonnull Macros macros;
 }

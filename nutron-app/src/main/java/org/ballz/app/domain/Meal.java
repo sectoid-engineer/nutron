@@ -1,14 +1,19 @@
 package org.ballz.app.domain;
 
+import lombok.Getter;
+
+import jakarta.annotation.Nonnull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Meal extends Tracked {
-    LocalDateTime dateTime;
-    Recipe recipe;
-    Macros targets;
+@Getter
+public class Meal extends NutritionEntity {
+    private final LocalDateTime dateTime;
+    private final Recipe recipe;
 
-    public Meal(UUID id) {
-      super(id);
-    }
+  public Meal(@Nonnull UUID id, @Nonnull Macros macros, LocalDateTime dateTime, Recipe recipe) {
+    super(id, macros);
+    this.dateTime = dateTime;
+    this.recipe = recipe;
+  }
 }
