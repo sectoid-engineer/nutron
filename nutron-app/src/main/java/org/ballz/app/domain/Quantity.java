@@ -6,39 +6,38 @@ import lombok.RequiredArgsConstructor;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 @Valid
 public record Quantity(
     @Min(value = 0, message = "Quantity can't be negative")
     @Max(value = 500_000_000, message = "Quantity too large")
-    Integer amount,
+    BigDecimal amount,
     Unit unit) {
 
   public boolean isLargerThan(Quantity other) {
-    return this.amount() * this.unit().getScale() > other.amount() + other.unit().getScale();
+    return this.amount().multiply(this.unit().getScale()).compareTo(
+           other.amount().multiply(other.unit().getScale())) > 0;
   }
 
   public Quantity plus(Quantity additional) {
     Objects.requireNonNull(additional);
 
     Unit sumUnit = minCommonUnit(this.unit, additional.unit());
-    int sumAmount =
-        ( this.amount() * this.unit().getScale() + additional.amount() * additional.unit().getScale() )
-        / sumUnit.getScale();
+    BigDecimal sumAmount =
+        (this.amount().multiply(this.unit().getScale())
+            .add(additional.amount().multiply(additional.unit().getScale())))
+            .divide(sumUnit.getScale(), RoundingMode.HALF_UP);
 
     return new Quantity(sumAmount, sumUnit);
   }
 
-  public Quantity times(Quantity factor) {
+  public Quantity scale(BigDecimal factor) {
     Objects.requireNonNull(factor);
 
-    Unit productUnit = minCommonUnit(this.unit, factor.unit());
-    int scale = this.unit.getScale() * factor.unit().getScale()
-                / productUnit.getScale()  / productUnit.getScale();
-    int productAmount = this.amount() * factor.amount() * scale;
-
-    return new Quantity(productAmount, productUnit);
+    return new Quantity(this.amount.multiply(factor), this.unit);
   }
 
   private Unit minCommonUnit(Unit a, Unit b) {
@@ -47,16 +46,18 @@ public record Quantity(
     else return Unit.G;
   }
 
-  public int inGrams() {
+  public BigDecimal inGrams() {
     if(unit == Unit.G) return amount;
-    else return Math.round((float)amount / unit.getScale());
+    else return amount.divide(unit.getScale(), RoundingMode.HALF_UP);
   }
 
   @RequiredArgsConstructor
   @Getter
   public enum Unit {
-    G(1_000_000), MG(1000), UG(1);
+    G(BigDecimal.valueOf(1_000_000)),
+    MG(BigDecimal.valueOf(1000)),
+    UG(BigDecimal.valueOf(1));
 
-    private final int scale;
+    private final BigDecimal scale;
   }
 }
