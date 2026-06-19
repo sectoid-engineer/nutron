@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import jakarta.annotation.Nonnull;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -25,6 +27,8 @@ public class Ingredient extends NutritionEntity {
   private final PortionSize portionSize;
 
   public Ingredient(@Nonnull UUID id,
+                    String name,
+                    String note,
                     @Nonnull Macros macros,
                     IngredientType type,
                     CookingState cookingState,
@@ -53,11 +57,15 @@ public class Ingredient extends NutritionEntity {
     final int grams;
   }
 
-//  public Macros scaleMacrosFor(Quantity quantity) {
-//    int scaleFactor = portionSize.getGrams() * quantity.inGrams();
-//    return new Macros(
-//        macros.cal() / portionSize.getGrams() * quantity.inGrams(),
-//        macros.fiber()
-//    )
-//  }
+  public Macros scaleMacrosFor(Quantity amount) {
+    return this.macros.scale(calculateScale(amount));
+  }
+
+  public Cost scaleCostFor(Quantity amount) {
+    return this.cost.scale(calculateScale(amount));
+  }
+
+  BigDecimal calculateScale(Quantity amount) {
+    return amount.inGrams().divide(BigDecimal.valueOf(portionSize.getGrams()), RoundingMode.HALF_UP);
+  }
 }

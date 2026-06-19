@@ -17,6 +17,8 @@ public record Quantity(
     BigDecimal amount,
     Unit unit) {
 
+  public static final Quantity ZERO = new Quantity(BigDecimal.ZERO, Unit.G);
+
   public boolean isLargerThan(Quantity other) {
     return this.amount().multiply(this.unit().getScale()).compareTo(
            other.amount().multiply(other.unit().getScale())) > 0;
@@ -59,5 +61,17 @@ public record Quantity(
     UG(BigDecimal.valueOf(1));
 
     private final BigDecimal scale;
+  }
+
+  public static Quantity g(int val) {
+    return new Quantity(BigDecimal.valueOf(val), Unit.G);
+  }
+
+  public static Quantity mg(int val) {
+    return new Quantity(BigDecimal.valueOf(val), Unit.MG);
+  }
+
+  public static Quantity ug(int val) {
+    return new Quantity(BigDecimal.valueOf(val), Unit.UG);
   }
 }

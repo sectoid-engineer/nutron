@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * Day: set of meals.
  * targets is the macros that the User should eat in this day
- * Tracked.macros is the current actual amount of Macros eaten so far
+ * macros is the current actual amount of Macros eaten so far
  */
 @Getter
 public class Day extends NutritionEntity {
@@ -31,5 +31,11 @@ public class Day extends NutritionEntity {
 
   public enum DayType {
     HARD_TRAIN, LIGHT_TRAIN, REST, SEDENTARY
+  }
+
+  public void addMeal(Meal newMeal) {
+    meals.add(newMeal);
+    macros.add(newMeal.getRecipe().getMacros());
+    cost.plus(newMeal.getRecipe().getSubtotalCost());
   }
 }

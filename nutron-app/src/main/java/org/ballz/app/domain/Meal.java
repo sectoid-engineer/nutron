@@ -9,7 +9,7 @@ import java.util.UUID;
 @Getter
 public class Meal extends NutritionEntity {
     private final LocalDateTime dateTime;
-    private final Recipe recipe;
+    @Nonnull private final Recipe recipe;
 
   public Meal(@Nonnull UUID id, @Nonnull Macros macros, LocalDateTime dateTime, Recipe recipe) {
     super(id, macros);

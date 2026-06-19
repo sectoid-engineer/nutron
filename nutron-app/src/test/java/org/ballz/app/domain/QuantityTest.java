@@ -57,6 +57,4 @@ class QuantityTest {
         .matches(q2 -> q2.amount().equals(BigDecimal.valueOf(20))
         && q1.unit() == Quantity.Unit.G);
   }
-
-
 }
