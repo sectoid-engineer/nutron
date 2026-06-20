@@ -1,11 +1,11 @@
 package org.ballz.app.domain;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class RecipeTest {
 
@@ -31,7 +31,7 @@ class RecipeTest {
             .build(),
         Ingredient.IngredientType.MEAT,
         Ingredient.CookingState.GRILLED,
-        Cost.czk(25),
+        Cost.czk(100),
         Ingredient.PortionSize.HUNDRED_GRAM);
     chicken.getMicronutrients()
         .put("Cholesterol", Quantity.mg(85));
@@ -51,9 +51,8 @@ class RecipeTest {
             .build(),
         Ingredient.IngredientType.VEGGIE,
         Ingredient.CookingState.RAW,
-        Cost.czk(20),
+        Cost.czk(100),
         Ingredient.PortionSize.HUNDRED_GRAM);
-
     pepper.getMicronutrients()
             .put("Sodium", Quantity.mg(4));
     pepper.getMicronutrients()
@@ -64,6 +63,7 @@ class RecipeTest {
     Recipe recipe3 = recipe2.withIngredient(pepper, Quantity.g(200));
 
     assertThat(recipe3.getSubtotalCost())
-        .matches(c -> c.value().equals(BigDecimal.valueOf(45)) && c.currency() == Cost.Currency.CZK);
+            .matches(recipeCost -> recipeCost.value().compareTo(BigDecimal.valueOf(450)) == 0
+            && recipeCost.currency() == Cost.Currency.CZK);
   }
 }

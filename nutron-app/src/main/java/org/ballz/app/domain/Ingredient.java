@@ -1,12 +1,12 @@
 package org.ballz.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import jakarta.annotation.Nonnull;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.math.MathContext;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -66,6 +66,6 @@ public class Ingredient extends NutritionEntity {
   }
 
   BigDecimal calculateScale(Quantity amount) {
-    return amount.inGrams().divide(BigDecimal.valueOf(portionSize.getGrams()), RoundingMode.HALF_UP);
+      return amount.inGrams().divide(BigDecimal.valueOf(portionSize.getGrams()), MathContext.DECIMAL32);
   }
 }
