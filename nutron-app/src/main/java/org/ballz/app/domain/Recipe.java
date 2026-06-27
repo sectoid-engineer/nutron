@@ -15,7 +15,7 @@ import java.util.UUID;
  */
 //@Builder
 @Getter
-public class Recipe extends NutritionEntity {
+public class Recipe extends NutronEntity {
   private final Map<Ingredient, Quantity> ingredientsQuantities;
   private final Map<String, Quantity> subtotalMicronutrients;
   private final Map<String, Quantity> subtotalOtherValues;

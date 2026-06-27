@@ -14,6 +14,7 @@
     <module>nutron-ui</module>
     <module>nutron-db-migration</module>
     <module>nutron-db-migration/nutron-db-migration-scripts</module>
+    <module>nutron-persistence</module>
   </modules>
 
   <properties>

@@ -1,9 +1,10 @@
 package org.ballz.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.data.relational.core.mapping.Embedded;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -18,25 +19,29 @@ import java.util.UUID;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
-public class Ingredient extends NutritionEntity {
+@Table("nu_ingredient")
+public class Ingredient extends NutronEntity {
   private final IngredientType type;
   private final CookingState cookingState;
-  private final Map<String, Quantity> micronutrients = new HashMap<>();
-  private final Map<String, Quantity> otherValues = new HashMap<>();
+
+  @Embedded(onEmpty = Embedded.OnEmpty.USE_EMPTY, prefix = "pportion_")
+  private final NutritionValues perPortion;
   private final Cost cost;
   private final PortionSize portionSize;
 
-  public Ingredient(@Nonnull UUID id,
+  public Ingredient(UUID id,
+                    int version,
                     String name,
                     String note,
-                    @Nonnull Macros macros,
                     IngredientType type,
                     CookingState cookingState,
+                    NutritionValues perPortion,
                     Cost cost,
                     PortionSize portionSize) {
-    super(id, macros);
+    super(id, version, name, note);
     this.type = type;
     this.cookingState = cookingState;
+    this.perPortion = perPortion;
     this.cost = cost;
     this.portionSize = portionSize;
   }
@@ -58,7 +63,7 @@ public class Ingredient extends NutritionEntity {
   }
 
   public Macros scaleMacrosFor(Quantity amount) {
-    return this.macros.scale(calculateScale(amount));
+    return this.perPortion.macros().scale(calculateScale(amount));
   }
 
   public Cost scaleCostFor(Quantity amount) {
@@ -67,5 +72,10 @@ public class Ingredient extends NutritionEntity {
 
   BigDecimal calculateScale(Quantity amount) {
       return amount.inGrams().divide(BigDecimal.valueOf(portionSize.getGrams()), MathContext.DECIMAL32);
+  }
+
+  @Override
+  public String toString() {
+    return this.id + " : " + this.name;
   }
 }

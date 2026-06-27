@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
-public class Meal extends NutritionEntity {
+public class Meal extends NutronEntity {
     private final LocalDateTime dateTime;
     @Nonnull private final Recipe recipe;
 

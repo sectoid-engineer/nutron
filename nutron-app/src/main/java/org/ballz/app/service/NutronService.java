@@ -1,6 +1,9 @@
 package org.ballz.app.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.ballz.app.domain.Ingredient;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service layer class for the application. Intended to encapsulate application/workflow logic that isn't strictly domain.
@@ -9,10 +12,9 @@ import org.ballz.app.domain.Ingredient;
  * * in case of a modification of an existing entity, the user first retrieves a list of entities, selects by entityId and retrieves the complete entity,
  *   makes the required modifications, and finally submits and saves the updated entity.
  */
+@Service
+@Slf4j
 public class NutronService {
-
-
-    public List<UUID>
 
     /**
      * Creates or Updates an ingredient.
@@ -20,7 +22,10 @@ public class NutronService {
      * In case of an Ingredient already containing an ID field, the intention is to replace the already existing Ingredient with the one provided.
      * @param ingredient to be stored in the database.
      */
+    @Transactional
     public void saveIngredient(Ingredient ingredient) {
+      log.info("Saving ingredient: {}", ingredient);
+
 
     }
 

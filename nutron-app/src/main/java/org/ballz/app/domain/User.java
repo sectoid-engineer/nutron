@@ -10,7 +10,7 @@ import java.util.UUID;
  * Tracked.macros represents the user's base daily expected macros
  */
 @Getter
-public class User extends NutritionEntity {
+public class User extends NutronEntity {
 
   private final int mealsPerDay;
   private final int metabolicBaseCal;

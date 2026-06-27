@@ -13,7 +13,7 @@ import java.util.UUID;
  * macros is the current actual amount of Macros eaten so far
  */
 @Getter
-public class Day extends NutritionEntity {
+public class Day extends NutronEntity {
     private final DayType type;
     private final LocalDateTime date;
     private final Macros targets;
